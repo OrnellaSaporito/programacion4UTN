@@ -57,7 +57,7 @@ header {
 }
 
 .menu-toggle {
-    display: block;
+    display: none;
     margin-right: 0;      
     padding-right: 0;
     background: none;
@@ -415,11 +415,12 @@ footer {
 @media (max-width: 768px) {
     /* Menú móvil */
     .menu-toggle { 
+        display: block;
         position: absolute;
-        right: 15px; 
+        right: 20px; 
         top: 50%;
         transform: translateY(-50%); 
-        z-index: 1000; 
+        z-index: 1001; 
      }
     
     .nav-links {
