@@ -10,23 +10,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 1.2 SOLUCIÓN ACCORDEÓN EN CELULAR: Clic abre, Clic cierra directo
+    // 1.2 Interacción Dropdowns Celular (Clic abre, Clic cierra directo)
     const dropdownToggles = document.querySelectorAll('.dropdown > a');
 
     dropdownToggles.forEach(toggle => {
-        // Usamos 'click' pero deteniendo la propagación para que el navegador no se confunda
         toggle.addEventListener('click', (e) => {
             if (window.innerWidth <= 768) {
                 e.preventDefault();
-                e.stopPropagation(); // ◄ CLAVE: Evita que el evento "bubleé" y confunda al navegador móvil
+                e.stopPropagation(); 
                 
                 const parentLi = toggle.parentElement;
 
-                // Verificamos de forma estricta si ya está abierto
                 if (parentLi.classList.contains('open')) {
                     parentLi.classList.remove('open');
                 } else {
-                    // Cerramos los demás antes de abrir este
                     document.querySelectorAll('.dropdown').forEach(li => {
                         li.classList.remove('open');
                     });
@@ -36,10 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // EXTRA: Si el usuario hace click en cualquier parte negra del menú o fuera, cerramos los dropdowns
+    // Cerrar submenús si se hace click fuera
     document.addEventListener('click', (e) => {
         if (window.innerWidth <= 768) {
-            // Si el click no fue en un botón desplegable, cerramos todos
             if (!e.target.matches('.dropdown > a')) {
                 document.querySelectorAll('.dropdown').forEach(li => {
                     li.classList.remove('open');
@@ -54,43 +50,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const lightboxImg = document.getElementById('lightbox-img');
     const closeBtn = document.querySelector('.close-lightbox');
     
-    // Nuevos elementos de flechas
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     
-    let currentIndex = 0; // Guardará la posición de la foto activa
+    let currentIndex = 0; 
 
-    // Función auxiliar para actualizar la imagen del lightbox según el índice actual
     const updateLightboxImage = (index) => {
-        lightboxImg.src = galeriaImgs[index].src;
+        if (galeriaImgs[index]) {
+            lightboxImg.src = galeriaImgs[index].src;
+        }
     };
 
-    if (lightbox) {
-        // Al hacer click en cualquier foto de la galería
+    if (lightbox && lightboxImg && prevBtn && nextBtn) {
+        // Al hacer click en cualquier foto
         galeriaImgs.forEach((img, index) => {
             img.addEventListener('click', () => {
-                currentIndex = index; // Guardamos qué número de foto es (0, 1, 2, etc.)
+                currentIndex = index; 
                 lightbox.style.display = 'flex';
                 updateLightboxImage(currentIndex);
             });
         });
 
-        // Evento Flecha Izquierda (Anterior)
+        // Evento Flecha Izquierda
         prevBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Evita que se cierre el lightbox al hacer click en la flecha
+            e.stopPropagation(); 
             currentIndex--;
-            // Si llega antes de la primera foto, vuelve a la última (efecto bucle sin fin)
             if (currentIndex < 0) {
                 currentIndex = galeriaImgs.length - 1;
             }
             updateLightboxImage(currentIndex);
         });
 
-        // Evento Flecha Derecha (Siguiente)
+        // Evento Flecha Derecha
         nextBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Evita que se cierre el lightbox
+            e.stopPropagation(); 
             currentIndex++;
-            // Si pasa la última foto, reinicia a la primera
             if (currentIndex >= galeriaImgs.length) {
                 currentIndex = 0;
             }
@@ -102,19 +96,19 @@ document.addEventListener('DOMContentLoaded', () => {
             lightbox.style.display = 'none';
         });
 
-        // Cerrar al hacer clic fuera de la imagen (en el fondo negro)
+        // Cerrar al hacer clic en el fondo negro (pero no en las flechas ni imagen)
         lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) {
                 lightbox.style.display = 'none';
             }
         });
 
+        // Controlar el visor con el teclado físico
         document.addEventListener('keydown', (e) => {
-            // Solo si el lightbox está actualmente abierto en la pantalla
             if (lightbox.style.display === 'flex') {
-                if (e.key === 'ArrowRight') nextBtn.click(); // Simula click en flecha derecha
-                if (e.key === 'ArrowLeft') prevBtn.click();   // Simula click en flecha izquierda
-                if (e.key === 'Escape') closeBtn.click();     // Simula click en la X para cerrar
+                if (e.key === 'ArrowRight') nextBtn.click();
+                if (e.key === 'ArrowLeft') prevBtn.click();
+                if (e.key === 'Escape') closeBtn.click();
             }
         });
     }
@@ -125,17 +119,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (form) {
         form.addEventListener('submit', function(e) {
-            e.preventDefault(); // Evita recargar la página
+            e.preventDefault(); 
 
             const nombre = document.getElementById('nombre').value.trim();
             const email = document.getElementById('email').value.trim();
             const asunto = document.getElementById('asunto').value.trim();
             const mensaje = document.getElementById('mensaje').value.trim();
 
-            // Resetear clases de mensajes
             formMensaje.className = 'form-mensaje';
 
-            // Validación básica
             if (nombre === '' || email === '' || asunto === '' || mensaje === '') {
                 formMensaje.textContent = 'Por favor, completa todos los campos.';
                 formMensaje.classList.add('error');
@@ -143,7 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Expresión regular para validar el correo
             const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!regexEmail.test(email)) {
                 formMensaje.textContent = 'Por favor, ingresa un correo electrónico válido.';
@@ -152,15 +143,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Simulación de envío exitoso
             formMensaje.textContent = `¡Gracias por tu mensaje, ${nombre}! Te responderemos pronto, ARMY 💜`;
             formMensaje.classList.add('exito');
             formMensaje.classList.remove('hidden');
 
-            // Limpiar formulario
             form.reset();
 
-            // Ocultar mensaje después de 5 segundos
             setTimeout(() => {
                 formMensaje.classList.add('hidden');
             }, 5000);

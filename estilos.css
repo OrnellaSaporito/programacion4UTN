@@ -192,81 +192,76 @@ main {
 }
 
 /* Lightbox */
+/* --- Contenedor Principal del Lightbox --- */
 .lightbox {
-    display: none;
+    display: none; 
     position: fixed;
-    z-index: 2000;
+    z-index: 3000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 0.93);
     align-items: center;
     justify-content: center;
 }
 
 .lightbox-content {
-    max-width: 90%;
-    max-height: 90%;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(255,255,255,0.2);
+    max-width: 85%;
+    max-height: 85%;
+    border-radius: 5px;
+    box-shadow: 0 0 25px rgba(92, 42, 157, 0.5);
 }
 
 .close-lightbox {
     position: absolute;
-    top: 20px;
-    right: 40px;
+    top: 25px;
+    right: 35px;
     color: #fff;
-    font-size: 40px;
+    font-size: 45px;
     font-weight: bold;
     cursor: pointer;
+    transition: color 0.2s;
+    z-index: 3010;
 }
 
-/* --- Botones de navegación del Lightbox (CORREGIDO) --- */
+.close-lightbox:hover { color: #5c2abd; }
+
+/* --- Botones de Flechas Visibles --- */
 .lightbox-arrow {
-    position: fixed;            /* ◄ Cambiado a fixed para asegurar que sigan a la pantalla */
+    position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(255, 255, 255, 0.15) !important; /* Fondo gris sutil semitransparente */
-    color: #ffffff !important;  /* ◄ Forzamos el color blanco para los iconos */
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
-    font-size: 32px !important; /* Tamaño del icono grande y visible */
-    width: 60px !important;     /* Ancho fijo del botón */
-    height: 60px !important;    /* Alto fijo del botón */
-    display: flex !important;   /* Centra el icono dentro del botón */
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    font-size: 26px !important;
+    width: 55px !important;
+    height: 55px !important;
+    display: flex !important;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border-radius: 50% !important; /* Botón completamente redondo, queda más elegante */
+    border-radius: 50% !important;
     transition: all 0.3s ease;
-    z-index: 3000 !important;   /* ◄ Número ultra alto para clavar las flechas POR ENCIMA del fondo negro */
+    z-index: 3010;
 }
 
-/* Posicionamiento milimétrico a los costados */
-.prev-arrow {
-    left: 40px !important;
-}
+.prev-arrow { left: 35px !important; }
+.next-arrow { right: 35px !important; }
 
-.next-arrow {
-    right: 40px !important;
-}
-
-/* Efecto Hover: Al pasar el mouse se encienden con el morado de BTS */
 .lightbox-arrow:hover {
-    background-color: #5c2abd !important; /* Reemplaza por tu variable --purple-primary si prefieres */
+    background-color: #5c2abd !important;
     border-color: #5c2abd !important;
-    transform: translateY(-50%) scale(1.1); /* Se agrandan un poquito al mirarlas */
+    transform: translateY(-50%) scale(1.08);
 }
 
-/* Ajustes para Celulares (Para que no tapen la foto en pantallas chicas) */
+/* --- Ajuste Media Query Celulares --- */
 @media (max-width: 768px) {
-    .lightbox-arrow {
-        width: 45px !important;
-        height: 45px !important;
-        font-size: 20px !important;
-    }
-    .prev-arrow { left: 15px !important; }
-    .next-arrow { right: 15px !important; }
+    .lightbox-content { max-width: 92%; max-height: 75%; }
+    .lightbox-arrow { width: 45px !important; height: 45px !important; font-size: 18px !important; }
+    .prev-arrow { left: 10px !important; }
+    .next-arrow { right: 10px !important; }
 }
 
 /* --- Contacto --- */
