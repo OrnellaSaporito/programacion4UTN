@@ -440,10 +440,20 @@ footer {
 
     .nav-links.active { display: flex; }
     
-    .dropdown-content {
+    /* 1. CORRECCIÓN CLAVE: Forzamos a que esté oculto en celulares (evita el bug del hover de PC) */
+    .dropdown .dropdown-content {
+        display: none !important; 
         position: static;
         box-shadow: none;
         background-color: rgba(0,0,0,0.2);
+    }
+
+    /* 2. LA MAGIA DEL CLICK: Solo si el elemento tiene la clase .open (puesta por tu JS), se va a mostrar */
+    .dropdown.open .dropdown-content {
+        display: block !important;
+        position: static; 
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.2);
     }
 
     /* Galería */
@@ -458,12 +468,5 @@ footer {
     
     .solo-album {
         width: 100%;
-    }
-
-    .dropdown.open .dropdown-content {
-        display: block !important;
-        position: static; 
-        width: 100%;
-        background-color: rgba(0, 0, 0, 0.2);
     }
 }
