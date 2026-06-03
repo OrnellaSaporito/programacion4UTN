@@ -459,4 +459,11 @@ footer {
     .solo-album {
         width: 100%;
     }
+
+    .dropdown.open .dropdown-content {
+        display: block !important;
+        position: static; 
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.2);
+    }
 }

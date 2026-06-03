@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. Menú Móvil Responsive
+    // 1.1 Menú Móvil Responsive
     const menuBtn = document.getElementById('mobile-menu-btn');
     const navLinks = document.querySelector('.nav-links');
 
@@ -9,6 +9,33 @@ document.addEventListener('DOMContentLoaded', () => {
             navLinks.classList.toggle('active');
         });
     }
+
+    // 1.2 SOLUCIÓN DROPWNS EN CELULAR: Abrir y cerrar menús desplegables
+    // Buscamos los enlaces principales de "Discografía" y "Miembros"
+    const dropdownToggles = document.querySelectorAll('.dropdown > a');
+
+    dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', (e) => {
+            // Solo se ejecuta en pantallas chicas (celulares/tablets)
+            if (window.innerWidth <= 768) {
+                e.preventDefault(); // Detiene el salto del '#' y evita redirecciones raras
+                
+                const parentLi = toggle.parentElement; // Conseguimos el <li> (.dropdown)
+
+                // Si ya está abierto, lo cerramos
+                if (parentLi.classList.contains('open')) {
+                    parentLi.classList.remove('open');
+                } else {
+                    // Cerramos cualquier otro que esté abierto para que no se encimen
+                    document.querySelectorAll('.dropdown').forEach(li => {
+                        li.classList.remove('open');
+                    });
+                    // Abrimos el actual
+                    parentLi.classList.add('open');
+                }
+            }
+        });
+    });
 
     // 2. Funcionalidad Lightbox de la Galería
     const galeriaImgs = document.querySelectorAll('.galeria-img');
