@@ -10,31 +10,42 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 1.2 SOLUCIÓN DROPWNS EN CELULAR: Abrir y cerrar menús desplegables
-    // Buscamos los enlaces principales de "Discografía" y "Miembros"
+    // 1.2 SOLUCIÓN ACCORDEÓN EN CELULAR: Clic abre, Clic cierra directo
     const dropdownToggles = document.querySelectorAll('.dropdown > a');
 
     dropdownToggles.forEach(toggle => {
+        // Usamos 'click' pero deteniendo la propagación para que el navegador no se confunda
         toggle.addEventListener('click', (e) => {
-            // Solo se ejecuta en pantallas chicas (celulares/tablets)
             if (window.innerWidth <= 768) {
-                e.preventDefault(); // Detiene el salto del '#' y evita redirecciones raras
+                e.preventDefault();
+                e.stopPropagation(); // ◄ CLAVE: Evita que el evento "bubleé" y confunda al navegador móvil
                 
-                const parentLi = toggle.parentElement; // Conseguimos el <li> (.dropdown)
+                const parentLi = toggle.parentElement;
 
-                // Si ya está abierto, lo cerramos
+                // Verificamos de forma estricta si ya está abierto
                 if (parentLi.classList.contains('open')) {
                     parentLi.classList.remove('open');
                 } else {
-                    // Cerramos cualquier otro que esté abierto para que no se encimen
+                    // Cerramos los demás antes de abrir este
                     document.querySelectorAll('.dropdown').forEach(li => {
                         li.classList.remove('open');
                     });
-                    // Abrimos el actual
                     parentLi.classList.add('open');
                 }
             }
         });
+    });
+
+    // EXTRA: Si el usuario hace click en cualquier parte negra del menú o fuera, cerramos los dropdowns
+    document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768) {
+            // Si el click no fue en un botón desplegable, cerramos todos
+            if (!e.target.matches('.dropdown > a')) {
+                document.querySelectorAll('.dropdown').forEach(li => {
+                    li.classList.remove('open');
+                });
+            }
+        }
     });
 
     // 2. Funcionalidad Lightbox de la Galería
