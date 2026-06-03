@@ -25,8 +25,7 @@ body {
 /* --- Encabezado y Navegación (Flexbox) --- */
 header {
     background-color: var(--purple-dark);
-    position: relative;
-    width: 100%;
+    position: sticky;
     top: 0;
     z-index: 1000;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -36,11 +35,9 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     padding: 15px 20px;
-    box-sizing: border-box;
 }
 
 .logo a {
@@ -58,14 +55,12 @@ header {
 
 .menu-toggle {
     display: none;
-    margin-right: 0;      
-    padding-right: 0;
     background: none;
     border: none;
     color: var(--text-light);
     font-size: 24px;
     cursor: pointer;
-} 
+}
 
 
 
@@ -414,14 +409,7 @@ footer {
 
 @media (max-width: 768px) {
     /* Menú móvil */
-    .menu-toggle { 
-        display: block;
-        position: absolute;
-        right: 20px; 
-        top: 50%;
-        transform: translateY(-50%); 
-        z-index: 1001; 
-     }
+    .menu-toggle { display: block; }
     
     .nav-links {
         display: none;
