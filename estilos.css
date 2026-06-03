@@ -210,7 +210,6 @@ main {
     max-width: 85%;
     max-height: 85%;
     border-radius: 5px;
-    box-shadow: 0 0 25px rgba(92, 42, 157, 0.5);
 }
 
 .close-lightbox {
