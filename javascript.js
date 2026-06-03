@@ -48,18 +48,53 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 2. Funcionalidad Lightbox de la Galería
+    // 2. Funcionalidad Lightbox de la Galería (Con navegación por flechas)
     const galeriaImgs = document.querySelectorAll('.galeria-img');
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
     const closeBtn = document.querySelector('.close-lightbox');
+    
+    // Nuevos elementos de flechas
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    
+    let currentIndex = 0; // Guardará la posición de la foto activa
+
+    // Función auxiliar para actualizar la imagen del lightbox según el índice actual
+    const updateLightboxImage = (index) => {
+        lightboxImg.src = galeriaImgs[index].src;
+    };
 
     if (lightbox) {
-        galeriaImgs.forEach(img => {
+        // Al hacer click en cualquier foto de la galería
+        galeriaImgs.forEach((img, index) => {
             img.addEventListener('click', () => {
+                currentIndex = index; // Guardamos qué número de foto es (0, 1, 2, etc.)
                 lightbox.style.display = 'flex';
-                lightboxImg.src = img.src;
+                updateLightboxImage(currentIndex);
             });
+        });
+
+        // Evento Flecha Izquierda (Anterior)
+        prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Evita que se cierre el lightbox al hacer click en la flecha
+            currentIndex--;
+            // Si llega antes de la primera foto, vuelve a la última (efecto bucle sin fin)
+            if (currentIndex < 0) {
+                currentIndex = galeriaImgs.length - 1;
+            }
+            updateLightboxImage(currentIndex);
+        });
+
+        // Evento Flecha Derecha (Siguiente)
+        nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Evita que se cierre el lightbox
+            currentIndex++;
+            // Si pasa la última foto, reinicia a la primera
+            if (currentIndex >= galeriaImgs.length) {
+                currentIndex = 0;
+            }
+            updateLightboxImage(currentIndex);
         });
 
         // Cerrar al hacer clic en la X
@@ -67,10 +102,19 @@ document.addEventListener('DOMContentLoaded', () => {
             lightbox.style.display = 'none';
         });
 
-        // Cerrar al hacer clic fuera de la imagen
+        // Cerrar al hacer clic fuera de la imagen (en el fondo negro)
         lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) {
                 lightbox.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            // Solo si el lightbox está actualmente abierto en la pantalla
+            if (lightbox.style.display === 'flex') {
+                if (e.key === 'ArrowRight') nextBtn.click(); // Simula click en flecha derecha
+                if (e.key === 'ArrowLeft') prevBtn.click();   // Simula click en flecha izquierda
+                if (e.key === 'Escape') closeBtn.click();     // Simula click en la X para cerrar
             }
         });
     }

@@ -222,6 +222,51 @@ main {
     cursor: pointer;
 }
 
+.lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    font-size: 30px;
+    padding: 15px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    z-index: 2010; /* Por encima de la imagen */
+}
+
+/* Posicionamiento individual */
+.prev-arrow {
+    left: 30px;
+}
+
+.next-arrow {
+    right: 30px;
+}
+
+/* Efecto hover en las flechas */
+.lightbox-arrow:hover {
+    background-color: var(--purple-primary); /* Usa el morado de tu paleta */
+    color: white;
+}
+
+/* Animación sutil al hacer click */
+.lightbox-arrow:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+/* Adaptación para pantallas chicas (Celulares) */
+@media (max-width: 768px) {
+    .lightbox-arrow {
+        font-size: 20px;
+        padding: 10px 15px;
+    }
+    .prev-arrow { left: 10px; }
+    .next-arrow { right: 10px; }
+}
+
 /* --- Contacto --- */
 .contacto-section {
     margin-top: 60px;
