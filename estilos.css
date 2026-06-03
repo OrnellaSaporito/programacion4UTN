@@ -54,7 +54,7 @@ header {
 }
 
 .menu-toggle {
-    display: none;
+    display: none;       
     background: none;
     border: none;
     color: var(--text-light);
@@ -409,8 +409,17 @@ footer {
 
 @media (max-width: 768px) {
     /* Menú móvil */
-    .menu-toggle { display: block; }
+    .menu-toggle { 
+        display: block;       
+        position: absolute;   
+        right: 20px;          
+        top: 50%;             
+        transform: translateY(-50%); 
+        z-index: 1001; 
+    }
     
+    .nav-container { padding-right: 60px; }
+
     .nav-links {
         display: none;
         flex-direction: column;
