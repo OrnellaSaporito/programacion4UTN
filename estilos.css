@@ -222,49 +222,51 @@ main {
     cursor: pointer;
 }
 
+/* --- Botones de navegación del Lightbox (CORREGIDO) --- */
 .lightbox-arrow {
-    position: absolute;
+    position: fixed;            /* ◄ Cambiado a fixed para asegurar que sigan a la pantalla */
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: none;
-    font-size: 30px;
-    padding: 15px 20px;
+    background-color: rgba(255, 255, 255, 0.15) !important; /* Fondo gris sutil semitransparente */
+    color: #ffffff !important;  /* ◄ Forzamos el color blanco para los iconos */
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    font-size: 32px !important; /* Tamaño del icono grande y visible */
+    width: 60px !important;     /* Ancho fijo del botón */
+    height: 60px !important;    /* Alto fijo del botón */
+    display: flex !important;   /* Centra el icono dentro del botón */
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    z-index: 2010; /* Por encima de la imagen */
+    border-radius: 50% !important; /* Botón completamente redondo, queda más elegante */
+    transition: all 0.3s ease;
+    z-index: 3000 !important;   /* ◄ Número ultra alto para clavar las flechas POR ENCIMA del fondo negro */
 }
 
-/* Posicionamiento individual */
+/* Posicionamiento milimétrico a los costados */
 .prev-arrow {
-    left: 30px;
+    left: 40px !important;
 }
 
 .next-arrow {
-    right: 30px;
+    right: 40px !important;
 }
 
-/* Efecto hover en las flechas */
+/* Efecto Hover: Al pasar el mouse se encienden con el morado de BTS */
 .lightbox-arrow:hover {
-    background-color: var(--purple-primary); /* Usa el morado de tu paleta */
-    color: white;
+    background-color: #5c2abd !important; /* Reemplaza por tu variable --purple-primary si prefieres */
+    border-color: #5c2abd !important;
+    transform: translateY(-50%) scale(1.1); /* Se agrandan un poquito al mirarlas */
 }
 
-/* Animación sutil al hacer click */
-.lightbox-arrow:active {
-    transform: translateY(-50%) scale(0.95);
-}
-
-/* Adaptación para pantallas chicas (Celulares) */
+/* Ajustes para Celulares (Para que no tapen la foto en pantallas chicas) */
 @media (max-width: 768px) {
     .lightbox-arrow {
-        font-size: 20px;
-        padding: 10px 15px;
+        width: 45px !important;
+        height: 45px !important;
+        font-size: 20px !important;
     }
-    .prev-arrow { left: 10px; }
-    .next-arrow { right: 10px; }
+    .prev-arrow { left: 15px !important; }
+    .next-arrow { right: 15px !important; }
 }
 
 /* --- Contacto --- */
